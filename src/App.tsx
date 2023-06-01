@@ -81,6 +81,11 @@ function App() {
 
   }, [latestAnswer])
 
+  useEffect(() => {
+    setChallengeCorrectCount(0);
+    setChallengeWrongCount(0);
+  }, [isWhiteView])
+
 
   return (
     <>
