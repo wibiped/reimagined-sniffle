@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ChessSquareProps } from '../interfaces/ChessSquareProps';
 
+const correctSound = new Audio('/correct.mp3');
+const wrongSound = new Audio('/wrong.mp3');
 const ChessSquare: React.FC<ChessSquareProps> = ({ isDarkSquare, position, currentPosition, setLatestAnswer }) => {
   const [squareState, setSquareState] = useState({ isClicked: false, isCorrect: false });
 
@@ -17,14 +19,13 @@ const ChessSquare: React.FC<ChessSquareProps> = ({ isDarkSquare, position, curre
 
   const handleSquareClick = () => {
     const isCorrect = position === currentPosition;
-    setSquareState({ isClicked: true, isCorrect });
 
-    const audio = new Audio(isCorrect ? '/correct.mp3' : '/wrong.mp3');
+    const audio = isCorrect ? correctSound : wrongSound;
     audio.volume = 0.5;  // set volume to 50%
     audio.play();
 
+    setSquareState({ isClicked: true, isCorrect });
     setLatestAnswer(position);
-
   };
 
   const baseStyles = {
