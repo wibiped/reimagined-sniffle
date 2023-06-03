@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ChallengeDisplayProps } from '../interfaces/ChallengeDisplay';
+import { Failure, Success } from './Icons';
 
 export const ChallengeDisplay: React.FC<ChallengeDisplayProps> = ({ correctCount, wrongCount, startTime }) => {
   const [timer, setTimer] = useState(30);
+  const [correct, setCorrect] = useState(false);
+  const [incorrect, setIncorrect] = useState(false);
 
   useEffect(() => {
     const currentTime = Date.now();
@@ -38,23 +41,37 @@ export const ChallengeDisplay: React.FC<ChallengeDisplayProps> = ({ correctCount
       // ...
     }
   }, [timer]);
+
+  useEffect(() => {
+    if (correctCount > 0) {
+      setCorrect(true);
+      setTimeout(() => {
+        setCorrect(false);
+      }, 500); // Change the duration as per your preference
+    }
+  }, [correctCount]);
+
+  useEffect(() => {
+    if (wrongCount > 0) {
+      setIncorrect(true);
+      setTimeout(() => {
+        setIncorrect(false);
+      }, 500); // Change the duration as per your preference
+    }
+  }, [wrongCount]);
+
   return (
-    <div className="flex flex-row items-center text-xl">
-      <div className="flex-1">
-        ✅ {correctCount}
+    <div className="flex flex-row items-center text-3xl text-offWhite">
+      <div className={`flex-1 transition-all duration-500 ${correct ? 'text-green-500 text-4xl' : ''}`}>
+        +{correctCount}
       </div>
-      <div className="flex-1">
-        ❌ {wrongCount}
+      <div className={`flex-1 transition-all duration-500 ${incorrect ? 'text-red-300 text-4xl' : ''}`}>
+        -{wrongCount}
       </div>
 
-      {timer !== 0 &&
-        <div className="flex-1">
-          ⏰ {timer}
-        </div>
-      }
+      {timer !== 0 && <div className="flex-1">{timer}s</div>}
     </div>
   );
 };
 
 export default ChallengeDisplay;
-

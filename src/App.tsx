@@ -4,10 +4,21 @@ import './App.css';
 import ShareButton from './components/ShareButton';
 import { ChessBoard } from './components/ChessBoard';
 import ChallengeDisplay from './components/ChallengeDisplay';
+import { Howl } from 'howler'
 
 const ranks = ["8", "7", "6", "5", "4", "3", "2", "1"];
 const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
 export const positions = ranks.flatMap(rank => files.map(file => file + rank));
+
+const correctSound = new Howl({
+  src: ['correct.mp3'], // Replace with the path to your correct sound effect file
+  volume: 0.5, // Set volume to 50%
+});
+
+const wrongSound = new Howl({
+  src: ['wrong.mp3'], // Replace with the path to your wrong sound effect file
+  volume: 0.5, // Set volume to 50%
+});
 
 function App() {
   const [isWhiteView, setIsWhiteView] = useState(true);
@@ -53,6 +64,9 @@ function App() {
   const handleAnswer = (answer: string) => {
 
     let isCorrect = answer === targetPosition;
+    const sound = isCorrect ? correctSound : wrongSound;
+    sound.play();
+
     if (isCorrect) {
       newTargetPos();
     }
@@ -138,25 +152,36 @@ function App() {
               &#x21BB;
             </button>
           </div>
-
         </div>
       </div >
 
       {/* background gradient */}
-      < div
+      <div
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           right: 0,
           bottom: 0,
           left: 0,
-          background: `linear-gradient(45deg, #CFCFD8, #BDB5C9, #D8D2DA)`,
-          filter: 'brightness(80%) saturate(350%)', // Adjust brightness and saturation values as desired
-          animation: 'gradientAnimation 10s ease infinite',
           zIndex: -1,
-        }
-        }
-      ></div >
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            background: '#736394',
+            // filter: 'brightness(100%) saturate(50%)', // Adjust brightness and saturation values as desired
+            // opacity: 0.8, // Adjust the opacity as desired
+          }}
+        ></div>
+      </div>
+
+
     </>
   );
 }

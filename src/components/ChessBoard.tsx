@@ -10,6 +10,7 @@ export interface ChessBoardProps {
   targetPosition: string;
 }
 
+
 export const ChessBoard: React.FC<ChessBoardProps> = ({ isWhiteView, onAnswer, targetPosition }) => {
   const [latestAnswer, setLatestAnswer] = useState<string | null>(null);
   const [chessboardSize, setChessboardSize] = useState(0);
@@ -23,45 +24,59 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ isWhiteView, onAnswer, t
   }, []);
 
   useEffect(() => {
-    onAnswer(latestAnswer);
+    if (!latestAnswer) return;
+    // onAnswer(latestAnswer);
   }, [latestAnswer])
+
+  function onSquareAnswer(answer: string) {
+    setLatestAnswer(answer)
+    onAnswer(answer)
+  }
+
 
   return (
     <div
-    >
-      <div
-        className={`my-4 `}
-      >
-        <div className={`transform transition-transform duration-500 ${isWhiteView ? '' : 'rotate-180'}`}
-          ref={chessboardRef}
-          style={{
+      // chessboard wrapper
+      className='my-4'
+      style={{
+        width: '90vw',
+        maxWidth: 'calc(90vh - 15rem)',
+        height: '90vw',
+        maxHeight: 'calc(90vh - 15rem)',
+        position: 'relative' // Add this line to make the wrapper a positioning context
 
-            width: '90vw',
-            maxWidth: 'calc(90vh - 15rem)',
-            height: '90vw',
-            maxHeight: 'calc(90vh - 15rem)',
-            zIndex: 11,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(8, 1fr)',
-            gridTemplateRows: 'repeat(8, 1fr)'
-          }}
-        >
-          {/* squares */}
-          {positions.map((position, index) => {
-            const isDarkSquare = ((index % 8) + Math.floor(index / 8)) % 2 !== 0;
-            return (
-              <ChessSquare
-                key={position}
-                position={position}
-                isDarkSquare={isDarkSquare}
-                currentPosition={targetPosition}
-                setLatestAnswer={setLatestAnswer}
-              />
-            )
-          })}
-        </div>
-        {/* overlay */}
-        <div style={{
+      }}
+    >
+      <div className={`transform transition-transform duration-500 ${isWhiteView ? '' : 'rotate-180'}`}
+        ref={chessboardRef}
+        style={{
+          minWidth: '100%',
+          height: '100%',
+          zIndex: 11,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(8, 1fr)',
+          gridTemplateRows: 'repeat(8, 1fr)'
+        }}
+      >
+        {/* squares */}
+        {positions.map((position, index) => {
+          const isDarkSquare = ((index % 8) + Math.floor(index / 8)) % 2 !== 0;
+          return (
+            <ChessSquare
+              key={position}
+              position={position}
+              isDarkSquare={isDarkSquare}
+              currentPosition={targetPosition}
+              // setLatestAnswer={setLatestAnswer}
+              onAnswer={onSquareAnswer}
+            />
+          )
+        })}
+      </div>
+      {/* overlay */}
+      <div
+        className='text-offWhite'
+        style={{
           position: 'absolute',
           top: 0,
           left: 0,
@@ -71,11 +86,9 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ isWhiteView, onAnswer, t
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: `${chessboardSize / 3}px`,
-          color: 'white',
           pointerEvents: 'none'
         }}>
-          {targetPosition.toUpperCase()}
-        </div>
+        {targetPosition.toUpperCase()}
       </div>
     </div>
   );

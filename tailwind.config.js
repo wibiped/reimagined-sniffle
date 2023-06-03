@@ -29,10 +29,10 @@ module.exports = {
 
         },
       colors: {
-        // darkGray: '#495057',
-        darkGray: '#3C444C',
-        // darkGray: '#303841',
-        offWhite: '#F2F6FA',
+        offWhite:'#F5F4F6',
+        // darkGray:'#3E3644',
+        // darkGray:'#553555'
+        darkGray:'#2D1B4B'
       },
     },
   },

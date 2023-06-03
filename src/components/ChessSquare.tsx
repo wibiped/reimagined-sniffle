@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChessSquareProps } from '../interfaces/ChessSquareProps';
 
-const correctSound = new Audio('/correct.mp3');
-const wrongSound = new Audio('/wrong.mp3');
-const ChessSquare: React.FC<ChessSquareProps> = ({ isDarkSquare, position, currentPosition, setLatestAnswer }) => {
+const ChessSquare: React.FC<ChessSquareProps> = ({ isDarkSquare, position, currentPosition, onAnswer }) => {
   const [squareState, setSquareState] = useState({ isClicked: false, isCorrect: false });
 
   useEffect(() => {
@@ -19,17 +17,11 @@ const ChessSquare: React.FC<ChessSquareProps> = ({ isDarkSquare, position, curre
 
   const handleSquareClick = () => {
     const isCorrect = position === currentPosition;
-
-    const audio = isCorrect ? correctSound : wrongSound;
-    audio.volume = 0.5;  // set volume to 50%
-    audio.play();
-
     setSquareState({ isClicked: true, isCorrect });
-    setLatestAnswer(position);
+    onAnswer(position);
   };
 
   const baseStyles = {
-    opacity: '0.2',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -37,15 +29,20 @@ const ChessSquare: React.FC<ChessSquareProps> = ({ isDarkSquare, position, curre
     transition: 'all 1s ease-out'
   };
 
-  const tintRed = isDarkSquare ? '#b71c1c' : '#f56565';  // Corresponding to bg-red-700 and bg-red-500
-  const tintGreen = isDarkSquare ? '#2f855a' : '#48bb78';  // Corresponding to bg-green-700 and bg-green-500
+  const baseOpacity = 0.15; // Adjust this value to tweak the opacity of dark and light colors
+  const tintOpacity = 0.4; // Adjust this value to tweak the opacity of green and red colors
+  const greenOpacity = 1.0; // Adjust this value to tweak the opacity of green and red colors
 
-  const darkGray = '#3C444C';
-  const offWhite = '#F2F6FA';
+  const tintRed = isDarkSquare ? `rgba(183, 28, 28, ${tintOpacity})` : `rgba(245, 101, 101, ${tintOpacity})`; // Corresponding to bg-red-700 and bg-red-500
+  // const tintGreen = isDarkSquare ? `rgba(47, 133, 90, ${greenOpacity})` : `rgba(72, 187, 120, ${greenOpacity})`; // Corresponding to bg-green-700 and bg-green-500
+  const tintGreen = `rgba(72, 187, 120, ${greenOpacity})`; // Corresponding to bg-green-700 and bg-green-500
+
+  const darkGray = `rgba(60, 68, 76, ${baseOpacity})`;
+  const offWhite = `rgba(242, 246, 250, ${baseOpacity})`;
 
   const isDarkSquareStyle = isDarkSquare
     ? { background: darkGray, color: offWhite }
-    : { background: offWhite, color: darkGray }
+    : { background: offWhite, color: darkGray };
 
   const isClickedStyle = squareState.isClicked
     ? { background: squareState.isCorrect ? tintGreen : tintRed }
@@ -58,12 +55,9 @@ const ChessSquare: React.FC<ChessSquareProps> = ({ isDarkSquare, position, curre
   };
 
   return (
-    <div
-      style={squareStyles}
-      onClick={handleSquareClick}
-    >
-    </div >
+    <div style={squareStyles} onClick={handleSquareClick}></div>
   );
 };
 
 export default ChessSquare;
+
