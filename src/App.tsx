@@ -103,7 +103,7 @@ function App() {
 
   return (
     <>
-      <div className={`flex flex-col items-center justify-center min-h-screen`}
+      <div className={`flex flex-col items-center justify-center custom-h-screen`}
         style={{
           zIndex: 1, // Add a higher z-index value to the main div
         }}
