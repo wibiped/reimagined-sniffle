@@ -37,8 +37,11 @@ const ChessSquare: React.FC<ChessSquareProps> = ({ isDarkSquare, position, curre
   // const tintGreen = isDarkSquare ? `rgba(47, 133, 90, ${greenOpacity})` : `rgba(72, 187, 120, ${greenOpacity})`; // Corresponding to bg-green-700 and bg-green-500
   const tintGreen = `rgba(72, 187, 120, ${greenOpacity})`; // Corresponding to bg-green-700 and bg-green-500
 
-  const darkGray = `rgba(60, 68, 76, ${baseOpacity})`;
-  const offWhite = `rgba(242, 246, 250, ${baseOpacity})`;
+  // const darkGray = `rgba(90, 98, 106, ${baseOpacity})`;
+  // const offWhite = `rgba(242, 246, 250, ${baseOpacity})`;
+
+  const darkGray = '#e6e6e6'
+  const offWhite = '#fff'
 
   const isDarkSquareStyle = isDarkSquare
     ? { background: darkGray, color: offWhite }

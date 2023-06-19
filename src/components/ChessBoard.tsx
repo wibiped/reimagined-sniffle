@@ -37,7 +37,7 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ isWhiteView, onAnswer, t
   return (
     <div
       // chessboard wrapper
-      className='my-4'
+      className='my-4 shadow-lg'
       style={{
         width: '90vw',
         maxWidth: 'calc(90vh - 15rem)',
@@ -75,7 +75,6 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ isWhiteView, onAnswer, t
       </div>
       {/* overlay */}
       <div
-        className='text-offWhite'
         style={{
           position: 'absolute',
           top: 0,
@@ -88,7 +87,11 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ isWhiteView, onAnswer, t
           fontSize: `${chessboardSize / 3}px`,
           pointerEvents: 'none'
         }}>
-        {targetPosition.toUpperCase()}
+        <span
+          className='text-black text-shadow-lg'
+        >
+          {targetPosition.toUpperCase()}
+        </span>
       </div>
     </div>
   );

@@ -113,7 +113,7 @@ function App() {
             width: '90vw', maxWidth: 'calc(90vh - 15rem)'
           }}>
 
-          <div className="flex flex-row items-center justify-center" >
+          <div className="flex flex-row items-center justify-center bg-white shadow-lg " >
             <div className='flex-grow'
               style={{
                 width: '100%'
@@ -131,7 +131,7 @@ function App() {
                 setIsChallengeMode(!isChallengeMode)
               }
               }
-              className={`h-full p-3 rounded-full ${!isChallengeMode ? 'bg-offWhite' : 'bg-darkGray'} ${!isChallengeMode ? 'text-darkGray' : 'text-offWhite'}`}
+              className={`h-full p-3 italic bg-white text-black mx-2 `}
             >
               <span>
                 {isChallengeMode ? 'stop' : 'start'}
@@ -145,10 +145,12 @@ function App() {
             {/* button to flip the board */}
             <button
               onClick={() => setIsWhiteView(!isWhiteView)}
-              className={`h-full flex-grow p-3 rounded-full ${isWhiteView ? 'bg-offWhite' : 'bg-darkGray'}  ${isWhiteView ? 'text-darkGray' : 'text-offWhite'}`}
+              className={`h-full flex-grow p-3 shadow-lg ${isWhiteView ? 'text-black' : 'text-white'}  ${isWhiteView ? 'bg-white' : 'bg-black'}`}
               style={{ width: '100%' }}
             >
-              <span>{isWhiteView ? 'white' : 'black'}{' '}</span>
+              <span className="mr-1">
+                {isWhiteView ? 'white' : 'black'}{' '}
+              </span>
               &#x21BB;
             </button>
           </div>
@@ -174,7 +176,9 @@ function App() {
             right: 0,
             bottom: 0,
             left: 0,
-            background: '#736394',
+            // background: '#736394',
+            // background: '#312947',
+            background: '#dad9df'
             // filter: 'brightness(100%) saturate(50%)', // Adjust brightness and saturation values as desired
             // opacity: 0.8, // Adjust the opacity as desired
           }}

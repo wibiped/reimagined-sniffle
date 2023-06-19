@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -29,14 +31,32 @@ module.exports = {
 
         },
       colors: {
-        offWhite:'#F5F4F6',
+        // offWhite:'#F5F4F6',
         // darkGray:'#3E3644',
         // darkGray:'#553555'
-        darkGray:'#2D1B4B'
+        // darkGray:'#2D1B4B'
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // ...
+    plugin(function ({ addUtilities }) {
+      const textShadowUtilities = {
+        '.text-shadow-sm': {
+          'text-shadow': '0 1px 3px rgba(0, 0, 0, 0.3)',
+        },
+        '.text-shadow-md': {
+          'text-shadow': '0 4px 6px rgba(0, 0, 0, 0.3)',
+        },
+        '.text-shadow-lg': {
+          'text-shadow': '0 10px 15px rgba(0, 0, 0, 0.3)',
+        },
+        // Add more custom text shadow utilities as needed
+      };
+
+      addUtilities(textShadowUtilities, ['responsive', 'hover']);
+    }),
+  ]
 }
 
 

@@ -61,11 +61,11 @@ export const ChallengeDisplay: React.FC<ChallengeDisplayProps> = ({ correctCount
   }, [wrongCount]);
 
   return (
-    <div className="flex flex-row items-center text-3xl text-offWhite">
-      <div className={`flex-1 transition-all duration-500 ${correct ? 'text-green-500 text-4xl' : ''}`}>
+    <div className="flex flex-row items-center text-2xl text-offWhite">
+      <div className={`flex-1 ml-4 transition-all duration-500 ${correct ? 'text-green-500 ' : ''}`}>
         +{correctCount}
       </div>
-      <div className={`flex-1 transition-all duration-500 ${incorrect ? 'text-red-300 text-4xl' : ''}`}>
+      <div className={`flex-1 ml-4 transition-all duration-500 ${incorrect ? 'text-red-300 ' : ''}`}>
         -{wrongCount}
       </div>
 
